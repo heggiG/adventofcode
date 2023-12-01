@@ -12,22 +12,15 @@ const func = async () => {
     })
 
     let sum = 0;
-    let lineCount = 0;
     for await (let line of rl) {
-        const oldLine = line
-        lineCount++;
         while (numberRegex.test(line)) {
             line = line.replace(numberRegex, val => val[0] + numberNameMap.get(val) + val[val.length - 1])
         }
         const digits = line.split('').filter(char => !isNaN(char)).map(dig => parseInt(dig, 10));
-        const oldDigits = oldLine.split('').filter(char => !isNaN(char)).map(dig => parseInt(dig, 10));
         const number = parseInt('' + digits[0] + '' + digits[digits.length - 1], 10);
-        const oldNumber = parseInt('' + oldDigits[0] + '' + oldDigits[oldDigits.length - 1], 10);
         sum += number
-        if (oldLine !== line)
-            console.log(oldLine, oldNumber, line, Number(number))
     }
-    console.log(sum, lineCount)
+    console.log(sum)
 }
 
 const setupMap = () => {
